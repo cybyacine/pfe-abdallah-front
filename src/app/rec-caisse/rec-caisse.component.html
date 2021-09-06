@@ -1,0 +1,243 @@
+<!-- Main Wrapper -->
+<div class="main-wrapper">
+
+	<!-- Header -->
+	<div class="header"> 
+
+		<ul class="nav user-menu">
+			<!-- User Menu -->
+			<li class="nav-item dropdown has-arrow">
+				<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+					<span class="user-img">
+						<button class="btn btn-success btn-block">Options</button>
+					</span>
+				</a>
+				<div class="dropdown-menu">
+
+					<a class="dropdown-item" href="#Add_Account_details" data-toggle="modal">Nouveau</a>
+					<a class="dropdown-item" href="settings.html">Liste par compte</a>
+					<a class="dropdown-item" href="login.html">liste par choix</a>
+					<a class="dropdown-item" href="login.html">liste par recus </a>
+					<a class="dropdown-item" href="login.html">liste par tiers </a>
+					<a class="dropdown-item" href="login.html">liste par periode </a>
+				</div>
+			</li>
+			<!-- /User Menu -->
+
+			<!-- User Menu -->
+			<li class="nav-item dropdown ">
+				<a href="/home" class="dropdown-toggle nav-link">
+					<span class="user-img">
+						<button class="btn btn-success btn-block">Quitter</button>
+					</span>
+				</a>
+			</li>
+			<!-- /User Menu -->
+
+		</ul>
+	</div>
+	<!-- /Header -->
+
+	<style type="text/css">
+		.card {
+			cursor: pointer;
+		}
+	</style>
+
+	<!-- Page Wrapper -->
+	<div class="">
+
+		<div class="content container-fluid">
+
+			<!-- Page Header -->
+			<div class="page-header">
+				<div class="row">
+					<div class="col-sm-12">
+						<h3 class="page-title">Liste des rec caisses</h3>
+						<ul class="breadcrumb">
+							<li class="breadcrumb-item"><a href="index.html">Tableau de bord</a></li>
+							<li class="breadcrumb-item active">rec caisse</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!-- /Page Header -->
+
+
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="card">
+						<div class="card-body">
+							<div class="table-responsive">
+								<div class="table-responsive">
+									<table class="datatable table table-hover table-center mb-0">
+										<thead>
+											<tr>
+												<th>DATE</th>
+												<th>Recu</th>
+												<th>CO</th>
+												<th>TIERS</th>
+												<th>MONTANT</th>
+												<th>LIBELLE</th>
+												<th>MVT</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr *ngFor="let recCai of depCaisseServ.listRecCaisse">
+												<td (click)="populateForm(recCai)">
+													<a href="#Add_Account_details" data-toggle="modal">
+														{{recCai.date}}
+													</a>
+												</td>
+												<td (click)="populateForm(recCai)">
+													<a href="#Add_Account_details" data-toggle="modal">
+														{{recCai.recu}}
+													</a>
+												</td>
+												<td (click)="populateForm(recCai)">
+													<a href="#Add_Account_details" data-toggle="modal">
+														{{recCai.co}}
+													</a>
+												</td>
+												<td (click)="populateForm(recCai)">
+													<a href="#Add_Account_details" data-toggle="modal">
+														{{recCai.tiers}}
+													</a>
+												</td>
+												<td (click)="populateForm(recCai)">
+													<a href="#Add_Account_details" data-toggle="modal">
+														{{recCai.montant}}
+													</a>
+												</td>
+												<td (click)="populateForm(recCai)">
+													<a href="#Add_Account_details" data-toggle="modal">
+														{{recCai.libelle}}
+													</a>
+												</td>
+												<td (click)="populateForm(recCai)">
+													<a href="#Add_Account_details" data-toggle="modal">
+														{{recCai.mvt}}
+													</a>
+												</td>
+												
+												
+												<td>
+													<button  (click)="onDelete(recCai.depCaiId)"><img src="/assets/img/delete.png"></button>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<!-- /Page Wrapper -->
+
+	<!-- Modal -->
+	<div class="modal fade" id="Add_Account_details" aria-hidden="true" role="dialog">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">REC CAISSE</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form novalidate autocomplete="off" #form="ngForm" (submit)="onSubmit(form)">
+						<input type="hidden" name="depCaiId" [value]="depCaisseServ.recCaisse.depCaiId" />
+						<div class="row form-row">
+							<div class="col-12 col-sm-8">
+								<div class="form-group">
+									<label>DATE</label>
+									<input type="date" class="form-control" name="Date"
+									#Date="ngModel" [(ngModel)]="depCaisseServ.recCaisse.date">
+								</div>
+							</div>
+
+						</div>
+
+						<div class="row form-row">
+							<div class="col-12 col-sm-8">
+								<div class="form-group">
+									<label>Recu</label>
+									<input type="text" class="form-control" name="Recu"
+									#Recu="ngModel" [(ngModel)]="depCaisseServ.recCaisse.recu">
+								</div>
+							</div>
+
+						</div>
+
+						<div class="row form-row">
+							<div class="col-12 col-sm-12">
+								<div class="form-group">
+									<label>CO</label>
+									<select class="form-control" name="CO"
+									#CO="ngModel" [(ngModel)]="depCaisseServ.recCaisse.co">
+										<option value="comptable" selected>Choisissez</option>
+										<option  *ngFor="let compte of compteService.list" [value]="compte.co">{{ compte.co }}</option>
+										
+									</select>
+								</div>
+							</div>
+							
+						</div>
+
+						
+						<div class="row form-row">
+							<div class="col-12 col-sm-12">
+								<div class="form-group">
+									<label>TIERS</label>
+									<select class="form-control"  name="Tiers"
+									#Tiers="ngModel" [(ngModel)]="depCaisseServ.recCaisse.tiers">
+										<option value="comptable" selected>Choisissez</option>
+										<option  *ngFor="let paymentDetail of paymentDetailService.list" [value]="paymentDetail.cardOwnerName">{{ paymentDetail.cardOwnerName }}</option>										
+									</select>
+								</div>
+							</div>
+							
+						</div>
+
+						<div class="row form-row">
+							<div class="col-12 col-sm-12">
+								<div class="form-group">
+									<label>MONTANT</label>
+									<input type="text" class="form-control" name="Montant"
+									#Montant="ngModel" [(ngModel)]="depCaisseServ.recCaisse.montant">
+								</div>
+							</div>
+						</div>
+
+						<div class="row form-row">
+							<div class="col-12 col-sm-12">
+								<div class="form-group">
+									<label>LIBELLE</label>
+									<input type="text" class="form-control" name="Libelle"
+									#Libelle="ngModel" [(ngModel)]="depCaisseServ.recCaisse.libelle">
+								</div>
+							</div>
+						</div>
+
+						<div class="row form-row">
+							<div class="col-12 col-sm-12">
+								<div class="form-group">
+									<label>MVT</label>
+									<input type="text" class="form-control" name="MVT"
+									#MVT="ngModel" [(ngModel)]="depCaisseServ.recCaisse.mvt">
+								</div>
+							</div>
+						</div>
+
+						<button type="submit" [disabled]="form.invalid" class="btn btn-primary btn-block">ENREGISTRER</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /Main Wrapper -->

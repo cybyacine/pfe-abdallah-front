@@ -1,0 +1,57 @@
+
+<table class="table">
+  <thead>
+    <tr>
+      <th><input type="date" id="dateStart" class="form-control"></th>
+      <th><input type="date" id="dateEnd" class="form-control"></th>
+      <th colspan="2">
+        <select class="form-control" id="CO">
+          <option value="Choisissez" selected>Choisissez</option>
+          <option *ngFor="let compte of compteService.list" [value]="compte.co">{{ compte.co }}</option>										
+        </select>
+      </th>
+      <th colspan="2">
+        <select class="form-control" id="Tiers">
+          <option value="Choisissez" selected>Choisissez</option>
+          <option *ngFor="let payeur of paymentDetailService.list" [value]="payeur.cardOwnerName">{{ payeur.cardOwnerName }}</option>
+        </select>
+      </th>
+      <th>
+        <button (click)="filter()" class="btn btn-primary fa fa-filter"></button> | 
+        <button (click)="clearFilter()" class="btn btn-danger fa fa-remove"></button> | 
+        <button routerLink="/home" class="btn btn-success fa fa-sign-out"></button>
+      </th>
+    </tr>    
+    <tr>
+      <th>Date</th>
+      <th>Recu/NCH</th>
+      <th>CO</th>
+      <th>Tier</th>
+      <th>Libelle</th>
+      <th>MVT</th>
+      <th>Montant</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="recettes && recettes.length">
+    <tr *ngFor="let recette of filteredRecettes">
+      <th>{{ recette.date }}</th>
+      <th *ngIf="recette.recu">{{ recette.recu }}</th>
+      <th *ngIf="recette.nch">{{ recette.nch }}</th>
+      <th>{{ recette.co }}</th>
+      <th>{{ recette.tiers }}</th>
+      <th>{{ recette.libelle }}</th>
+      <th>{{ recette.mvt }}</th>
+      <th>{{ recette.montant }}</th>
+    </tr>
+    <tr>
+      <th colspan="5"></th>
+      <th style="text-transform: uppercase;">total</th>
+      <th style="text-transform: uppercase;">{{ decimal3Places(total) }}</th>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th colspan="7" style="text-align: center;" *ngIf="!recettes || recettes.length == 0">No record(s) found</th>
+    </tr>
+  </tfoot>
+</table>
